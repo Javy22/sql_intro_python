@@ -54,7 +54,7 @@ def create_schema():
     conn.close()
 
 
-def fill():
+def fill(id,name,age,grade,tutor):
     print('Completemos esta tablita!')
     # Llenar la tabla de la secundaria con al menos 5 estudiantes
     # Cada estudiante tiene los posibles campos:
@@ -67,6 +67,22 @@ def fill():
     # Se debe utilizar la sentencia INSERT.
     # Observar que hay campos como "grade" y "tutor" que no son obligatorios
     # en el schema creado, puede obivar en algunos casos completar esos campos
+    conn = sqlite3.connect('secundaria.db')
+    c = conn.cursor()
+
+    values = [id, name, age, grade, tutor]
+
+    c.execute("""
+        INSERT INTO estudiante (id, name, age, grade, tutor)
+        VALUES (?,?,?);""", values)
+
+    conn.commit()
+    # Cerrar la conexión con la base de datos
+    conn.close()
+
+
+
+
 
 
 def fetch():
@@ -102,7 +118,7 @@ def modify(id, name):
 if __name__ == '__main__':
     print("Bienvenidos a otra clase de Inove con Python")
     create_schema()   # create and reset database (DB)
-    # fill()
+    fill()
     # fetch()
 
     grade = 3
